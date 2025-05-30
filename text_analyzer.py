@@ -1,4 +1,5 @@
 import re
+import os
 
 def text_reader(file_path):
     try:
@@ -15,7 +16,7 @@ def text_reader(file_path):
         words = re.split(r'[,\s:;]+', text)
         words = [w.strip() for w in words if w.strip()]
         word_count = len(words)
-        
+        1
         return {
             'word_count': word_count,
             'sentence_count': sentence_count
@@ -25,18 +26,37 @@ def text_reader(file_path):
         print(f"Помилка: '{file_path}' - файл не знадено.")
         return None
 
-def main():
-    # Get file path from user
-    file_path = input("Enter the path to your .txt file: ")
+def list_available_files():
+    files_dir = "files"
+    if not os.path.exists(files_dir):
+        print("Помилка: директорія 'files' не існує.")
+        return []
+    
+    txt_files = [f for f in os.listdir(files_dir) if f.endswith('.txt')]
+    return txt_files
 
-    if not file_path.lower().endswith('.txt'):
-        print("Помилка: файл має мати .txt розширення")
+def main():
+    available_files = list_available_files()
+    
+    if not available_files:
+        print("У директорії 'files' немає .txt файлів.")
         return
+    
+    print("\nДоступні файли:")
+    for i, file in enumerate(available_files, 1):
+        print(f"{i}. {file}")
+
+    choice = input("\nВиберіть номер файлу для аналізу: ")
+    choice = int(choice)
+
+    if 1 <= choice <= len(available_files):
+        selected_file = available_files[choice - 1]
+        file_path = os.path.join("files", selected_file)
 
     result = text_reader(file_path)
     
     if result:
-        print(f"\nРезультат аналізу '{file_path}':")
+        print(f"\nРезультат аналізу '{selected_file}':")
         print(f"Кількість слів: {result['word_count']}")
         print(f"Кількість речень: {result['sentence_count']}")
 
