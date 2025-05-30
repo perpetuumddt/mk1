@@ -12,11 +12,10 @@ def text_reader(file_path):
         sentences = [s.strip() for s in sentences if s.strip()]
         sentence_count = len(sentences)
         
-        # Count words (split by space , : ;)
-        words = re.split(r'[,\s:;]+', text)
-        words = [w.strip() for w in words if w.strip()]
+        # Count words (split by space and punctuation)
+        words = re.findall(r'\b\w+\b', text)
         word_count = len(words)
-        1
+        
         return {
             'word_count': word_count,
             'sentence_count': sentence_count
