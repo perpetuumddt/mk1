@@ -1,0 +1,3 @@
+Fruits: apple, banana, pear.
+Vegetables: carrot, cabbage, potato.
+Tasty!
